@@ -17,8 +17,8 @@ export default function Home() {
           <Typography variant = "h6"  className="flex-grow:1">AiFlash</Typography>
           <div className="flex justify-between">
           <SignedOut >
-            <Button className="text-inherit">Login</Button>
-            <Button className="text-inherit">Sign Up</Button>
+            <Button className="text-inherit" href="/sign-in">Login</Button>
+            <Button className="text-inherit" href="/sign-up">Sign Up</Button>
           </SignedOut>
           </div>
           <SignedIn>
@@ -36,6 +36,17 @@ export default function Home() {
         </Button>
 
       </Box>
+
+      <div className="flex flex-row justify-around ">
+        <div>
+          <Typography variant="h3">Basic</Typography>
+          <Button className="bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">Subscribe</Button>
+        </div>
+        <div>
+          <Typography variant="h3">Pro</Typography>
+          <Button className="bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">Subscribe</Button>
+        </div>
+      </div>
 
     </Container>
 
