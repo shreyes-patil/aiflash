@@ -1,55 +1,50 @@
-import Image from "next/image";
-import getStripe from '@/utils/get-stripe'
-import { SignIn,SignedIn,SignedOut, UserButton  } from "@clerk/nextjs";
-import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
-import Head from "next/head";
+'use client'
+import React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Card from '@/components/custom/Card';
+import { useRouter } from 'next/navigation';
 
-export default function Home() {
+const Page = () => {
+  const handleProSubscribe = () => {
+    // Your subscription logic here
+    alert("Subscribed to Pro");
+  };
+
+  const router = useRouter();
+
   return (
-    <Container maxWidth = "xl" >
-      <Head>
-        <title>AiFlash</title>
-        <meta name = "description" content="generate flashcards with AI"/>
-      </Head>
-
-      <AppBar position="static" >
-        <Toolbar className="flex justify-between" >
-          <Typography variant = "h6"  className="flex-grow:1">AiFlash</Typography>
-          <div className="flex justify-between">
-          <SignedOut >
-            <Button className="text-inherit" href="/sign-in">Login</Button>
-            <Button className="text-inherit" href="/sign-up">Sign Up</Button>
-          </SignedOut>
-          </div>
-          <SignedIn>
-            <UserButton/>
-          </SignedIn>
-        </Toolbar>
-      </AppBar>
+    <div>
 
       <Box className="text-center">
         <Typography variant="h2"> Welcome to AIFlash</Typography>
         <Typography variant="h5"> Generate Flash cards with AI</Typography>
 
-        <Button className="bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">
-          Get Started
+        <Button onClick={() => {
+          router.push('/generate');
+        }} className="bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">
+          Generate Now
         </Button>
-
       </Box>
 
-      <div className="flex flex-row justify-around ">
-        <div>
-          <Typography variant="h3">Basic</Typography>
-          <Button className="bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">Subscribe</Button>
-        </div>
-        <div>
-          <Typography variant="h3">Pro</Typography>
-          <Button className="bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">Subscribe</Button>
-        </div>
+      <div className="flex flex-row justify-around">
+        <Card
+          title="Basic"
+          points={["1 AI generated card", "1 AI generated card", "1 AI generated card"]}
+          buttons={[{ name: "Subscribe", btnOnClick: () => {
+            alert("Subscribed to Basic");
+          } }]}
+        />
+
+        <Card
+          title="Pro"
+          points={["1 AI generated card", "1 AI generated card", "1 AI generated card"]}
+          buttons={[{ name: "Subscribe", btnOnClick: handleProSubscribe }]}
+        />
       </div>
-
-    </Container>
-
-   
+    </div>
   );
-}
+};
+
+export default Page;
