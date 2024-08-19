@@ -11,7 +11,6 @@ interface Flashcard {
   id: string;
   front: string;
   back: string;
-  name: string;  
 }
 
 export default function Flashcard(){
@@ -23,15 +22,20 @@ export default function Flashcard(){
 
     useEffect(() => {
         async function getFlashcards(){
-            if (!search || !user) return 
+            if (!search || !user || !db) {
+                console.log("Search, user, or db not available", { search, user, db })
+                return 
+            }
             try {
                 const colRef = collection(doc(collection(db, 'users'), user.id), search)
+                console.log("Collection reference:", colRef)
                 const docs = await getDocs(colRef)
+                console.log("Fetched documents:", docs.size)
                 const fetchedFlashcards: Flashcard[] = []
                 docs.forEach((doc) => {
-                    const data = doc.data()
+                    const data = doc.data() as Omit<Flashcard, 'id'>
                     console.log("Document Data:", data)
-                    fetchedFlashcards.push({ id: doc.id, ...data } as Flashcard)
+                    fetchedFlashcards.push({ ...data, id: doc.id })
                 })
                 console.log("Fetched Flashcards:", fetchedFlashcards)
                 setFlashcards(fetchedFlashcards)
@@ -40,30 +44,30 @@ export default function Flashcard(){
             }
         }
         getFlashcards()
-    }, [user, search])
+    }, [user, search, db])
     
-    const handleCardClick = (name: string) => {
+    const handleCardClick = (id: string) => {
         setFlipped((prev) => ({
           ...prev,
-          [name]: !prev[name],
+          [id]: !prev[id],
         }));
     };
     
     if (!isLoaded || !isSignedIn){
-        return <></>
+        return <div>Loading...</div>
     }
 
     return (
         <Container maxWidth="lg">
             <Grid container spacing={3} sx={{ mt: 4 }}>
                 {flashcards.length > 0 ? (
-                    <Box className="mt-4">
-                        <Typography variant="h5">Flashcards</Typography>
+                    <Box className="mt-4 w-full">
+                        <Typography variant="h5" gutterBottom>Flashcards</Typography>
                         <Grid container spacing={3}>
-                            {flashcards.map((flashcard, index) => (
-                                <Grid item xs={12} sm={6} md={4} key={index}>
+                            {flashcards.map((flashcard) => (
+                                <Grid item xs={12} sm={6} md={4} key={flashcard.id}>
                                     <Card>
-                                        <CardActionArea onClick={() => handleCardClick(flashcard.name)} className="border-2">
+                                        <CardActionArea onClick={() => handleCardClick(flashcard.id)} className="border-2">
                                             <CardContent>
                                                 <Box sx={{
                                                     perspective: '1000px',
@@ -74,10 +78,9 @@ export default function Flashcard(){
                                                         width: '100%',
                                                         height: '200px',
                                                         boxShadow: 'inherit',
-                                                        transform: flipped[flashcard.name]
+                                                        transform: flipped[flashcard.id]
                                                             ? 'rotateY(180deg)'
                                                             : 'rotateY(0deg)'
-
                                                     },
                                                     '& > div > div': {
                                                         position: 'absolute',
@@ -89,7 +92,6 @@ export default function Flashcard(){
                                                         alignItems: 'center',
                                                         padding: 2,
                                                         boxSizing: 'border-box'
-
                                                     },
                                                     '& > div > div:nth-of-type(2)': {
                                                         transform: 'rotateY(180deg)'
@@ -112,7 +114,7 @@ export default function Flashcard(){
                         </Grid>
                     </Box>
                 ) : (
-                    <Typography>No flashcards available.</Typography>
+                    <Typography variant="h6" className="w-full text-center mt-8">No flashcards available.</Typography>
                 )}
             </Grid>
         </Container>
