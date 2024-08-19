@@ -42,7 +42,8 @@ const Page = () => {
   const router = useRouter();
 
   return (
-    <div>
+    <div className='w-full'>
+
       <Box className="text-center">
         <Typography variant="h2">Welcome to AIFlash</Typography>
         <Typography variant="h5">Generate Flash cards with AI</Typography>
