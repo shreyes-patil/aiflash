@@ -15,7 +15,7 @@ const Page = () => {
   const router = useRouter();
 
   return (
-    <div>
+    <div className='w-full'>
 
       <Box className="text-center">
         <Typography variant="h2"> Welcome to AIFlash</Typography>
