@@ -1,17 +1,13 @@
+import { loadStripe } from '@stripe/stripe-js';
 
-import {loadStripe} from '@stripe/stripe-js'
+let stripePromise;
 
-
-let stripePromise
-
-// efficiently loads stripe only once, loads only when stripePromise is undefined/nan/null
-
+// Efficiently loads Stripe only once, loads only when stripePromise is undefined/null
 const getStripe = () => {
-    if(!stripePromise){
-    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
-}
-return StripePromise
-}
-
+  if (!stripePromise) {
+    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+  }
+  return stripePromise;
+};
 
 export default getStripe;
