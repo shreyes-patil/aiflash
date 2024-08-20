@@ -72,9 +72,9 @@ export default function Flashcards() {
                       <Typography variant="h6" className="font-bold">
                         {flashcard.name}
                       </Typography>
-                      <Typography variant="h6" className="font-bold">
+                      {/* <Typography variant="h6" className="font-bold">
                         Id: {JSON.stringify(flashcard)}
-                      </Typography>
+                      </Typography> */}
                     </CardContent>
                   </CardActionArea>
                 </Card>

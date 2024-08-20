@@ -50,6 +50,14 @@ const Page = () => {
         >
           Generate Now
         </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => router.push('/flashcards')}
+          className="bg-white text-purple-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-purple-100 transition duration-300"
+        >
+          View Flashcards
+        </motion.button>
       </motion.div>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">

@@ -15,11 +15,16 @@ const NavBar = () => {
           <SignedOut >
             <Button className="text-inherit" href="/sign-in">Login</Button>
             <Button className="text-inherit" href="/sign-up">Sign Up</Button>
+            {/* <Button className="text-inherit" href="/flashcards">View Flashcards</Button> */}
+
           </SignedOut>
           </div>
+          <div className="flex flex-row justify-around px-9">
           <SignedIn>
+          <Button className="text-inherit" href="/flashcards">View Flashcards</Button>
             <UserButton/>
           </SignedIn>
+          </div>
         </Toolbar>
       </AppBar>
   )
