@@ -25,7 +25,9 @@ export default function Flashcards() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
+        console.log('Document data:', docSnap.data());
         const collections = docSnap.data().flashcards || [];
+        console.log(JSON.stringify(collections));
         setFlashcards(collections);
       } else {
         await setDoc(docRef, { flashcards: [] });
@@ -65,10 +67,13 @@ export default function Flashcards() {
                 transition={{ duration: 0.8, delay: index * 0.1 }}
               >
                 <Card className="bg-white text-gray-800 rounded-lg shadow-xl">
-                  <CardActionArea onClick={() => handleCardClick(flashcard.id)}>
+                  <CardActionArea onClick={() => handleCardClick(flashcard.name)}>
                     <CardContent>
                       <Typography variant="h6" className="font-bold">
                         {flashcard.name}
+                      </Typography>
+                      <Typography variant="h6" className="font-bold">
+                        Id: {JSON.stringify(flashcard)}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
